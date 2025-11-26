@@ -64,8 +64,7 @@ export default function DummyFactory() {
   // 시각적 피드백 계산
   const { heavyY, textY } = calculateVisualFeedback(sizeMB);
 
-  // AdSense 환경 변수
-  const adsenseClient = import.meta.env.VITE_ADSENSE_CLIENT_ID;
+  // AdSense 환경 변수 (슬롯 ID만 필요)
   const sidebarSlot = import.meta.env.VITE_ADSENSE_SLOT_SIDEBAR;
   const footerSlot = import.meta.env.VITE_ADSENSE_SLOT_FOOTER;
 
@@ -104,21 +103,6 @@ export default function DummyFactory() {
           confetti={confetti}
           translations={t}
         />
-
-        {/* SIDEBAR AD - 데스크톱 전용 */}
-        {adsenseClient && sidebarSlot && (
-          <aside className="hidden lg:block lg:col-span-3">
-            <div className="sticky top-4">
-              <AdSense
-                client={adsenseClient}
-                slot={sidebarSlot}
-                format="rectangle"
-                responsive={false}
-                className="w-full"
-              />
-            </div>
-          </aside>
-        )}
       </main>
 
       {/* PRO TIP CARD */}
@@ -126,10 +110,9 @@ export default function DummyFactory() {
         <ProTipCard title={t.proTipTitle} description={t.proTipContent} />
 
         {/* FOOTER AD */}
-        {adsenseClient && footerSlot && (
+        {footerSlot && (
           <div className="mt-8 pt-8 border-t-2 border-black/5">
             <AdSense
-              client={adsenseClient}
               slot={footerSlot}
               format="auto"
               responsive={true}

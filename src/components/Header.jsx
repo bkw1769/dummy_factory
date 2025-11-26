@@ -15,7 +15,6 @@ export default function Header({
   currentLang,
   onToggleLang,
 }) {
-  const adsenseClient = import.meta.env.VITE_ADSENSE_CLIENT_ID;
   const headerSlot = import.meta.env.VITE_ADSENSE_SLOT_HEADER;
 
   return (
@@ -58,10 +57,9 @@ export default function Header({
       </header>
 
       {/* Header Ad - 반응형 디스플레이 광고 */}
-      {adsenseClient && headerSlot && (
+      {headerSlot && (
         <div className="w-full max-w-7xl mx-auto px-4 py-2 border-b-2 border-black/5">
           <AdSense
-            client={adsenseClient}
             slot={headerSlot}
             format="auto"
             responsive={true}
