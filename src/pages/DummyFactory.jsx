@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import FileTypeSelector from "../components/FileTypeSelector";
 import FileCrafter from "../components/FileCrafter";
 import ProTipCard from "../components/ProTipCard";
+import AdSense from "../components/AdSense";
 import { FILE_CATEGORIES } from "../constants/fileTypes";
 import { TRANSLATIONS } from "../constants/translations";
 import { generateDummyBlob, downloadFile } from "../utils/fileGenerator";
@@ -63,6 +64,11 @@ export default function DummyFactory() {
   // 시각적 피드백 계산
   const { heavyY, textY } = calculateVisualFeedback(sizeMB);
 
+  // AdSense 환경 변수
+  const adsenseClient = import.meta.env.VITE_ADSENSE_CLIENT_ID;
+  const sidebarSlot = import.meta.env.VITE_ADSENSE_SLOT_SIDEBAR;
+  const footerSlot = import.meta.env.VITE_ADSENSE_SLOT_FOOTER;
+
   return (
     <div className="min-h-screen bg-[#FFFBEB] text-gray-900 font-sans selection:bg-black selection:text-white flex flex-col">
       {/* HEADER */}
@@ -98,11 +104,39 @@ export default function DummyFactory() {
           confetti={confetti}
           translations={t}
         />
+
+        {/* SIDEBAR AD - 데스크톱 전용 */}
+        {adsenseClient && sidebarSlot && (
+          <aside className="hidden lg:block lg:col-span-3">
+            <div className="sticky top-4">
+              <AdSense
+                client={adsenseClient}
+                slot={sidebarSlot}
+                format="rectangle"
+                responsive={false}
+                className="w-full"
+              />
+            </div>
+          </aside>
+        )}
       </main>
 
       {/* PRO TIP CARD */}
       <div className="max-w-7xl mx-auto w-full px-4 md:px-10 pb-8">
         <ProTipCard title={t.proTipTitle} description={t.proTipContent} />
+
+        {/* FOOTER AD */}
+        {adsenseClient && footerSlot && (
+          <div className="mt-8 pt-8 border-t-2 border-black/5">
+            <AdSense
+              client={adsenseClient}
+              slot={footerSlot}
+              format="auto"
+              responsive={true}
+              className="text-center"
+            />
+          </div>
+        )}
       </div>
     </div>
   );
