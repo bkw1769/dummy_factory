@@ -1,0 +1,5 @@
+# ads.txt file for Dummy Factory
+# This file is used by Google AdSense to verify ad inventory
+
+google.com, pub-1873466927129812, DIRECT, f08c47fec0942fa0
+
