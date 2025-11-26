@@ -16,7 +16,7 @@ export const TRANSLATIONS = {
     proTipTitle: "Pro Tip",
     proTipContent:
       "Need a huge video? Just drag the slider to 1000MB. The file generated will have the correct size metadata for testing upload limits!",
-    repo: "Github Repo",
+    repo: "Developer Github",
   },
   ko: {
     subtitle: "만들고. 채우고. 배포하세요.",
@@ -32,6 +32,6 @@ export const TRANSLATIONS = {
     proTipTitle: "꿀팁",
     proTipContent:
       "대용량 동영상이 필요하신가요? 슬라이더를 1000MB까지 당겨보세요. 업로드 제한 테스트를 위한 완벽한 메타데이터를 가진 파일이 생성됩니다!",
-    repo: "깃허브 저장소",
+    repo: "개발자 깃허브",
   },
 };

@@ -14,7 +14,7 @@ import { validateSize, calculateVisualFeedback } from "../utils/sizeValidator";
  */
 export default function DummyFactory() {
   // State
-  const [lang, setLang] = useState("en"); // 기본값: 영어
+  const [lang, setLang] = useState("ko"); // 기본값: 한국어
   const [selectedCategory, setSelectedCategory] = useState(FILE_CATEGORIES[0]);
   const [selectedExt, setSelectedExt] = useState(
     FILE_CATEGORIES[0].extensions[0]
