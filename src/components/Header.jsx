@@ -8,7 +8,12 @@ import { Box, Globe } from "lucide-react";
  * @param {string} props.currentLang - 현재 언어 ('en' | 'ko')
  * @param {Function} props.onToggleLang - 언어 전환 핸들러
  */
-export default function Header({ subtitle, repoText, currentLang, onToggleLang }) {
+export default function Header({
+  subtitle,
+  repoText,
+  currentLang,
+  onToggleLang,
+}) {
   return (
     <header className="p-6 md:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b-2 border-black/5">
       <div className="flex items-center gap-3">
@@ -17,9 +22,11 @@ export default function Header({ subtitle, repoText, currentLang, onToggleLang }
         </div>
         <div>
           <h1 className="text-2xl md:text-3xl font-black tracking-tight leading-none">
-            DUMMY FACTORY
+            CODE ARCADE
           </h1>
-          <p className="text-xs md:text-sm font-bold text-gray-400">{subtitle}</p>
+          <p className="text-xs md:text-sm font-bold text-gray-400">
+            {subtitle}
+          </p>
         </div>
       </div>
 
@@ -29,11 +36,15 @@ export default function Header({ subtitle, repoText, currentLang, onToggleLang }
           className="flex items-center gap-2 px-3 py-2 rounded-lg font-bold border-2 border-transparent hover:bg-black/5 transition-all active:scale-95"
         >
           <Globe size={20} />
-          <span className="text-sm">{currentLang === "en" ? "ENG" : "KOR"}</span>
+          <span className="text-sm">
+            {currentLang === "en" ? "ENG" : "KOR"}
+          </span>
         </button>
 
         <a
-          href="#"
+          href="https://github.com/bkw1769"
+          target="_blank"
+          rel="noopener noreferrer"
           className="hidden md:block font-bold underline decoration-4 decoration-pink-400 hover:text-pink-500"
         >
           {repoText}

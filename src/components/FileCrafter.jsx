@@ -38,7 +38,7 @@ export default function FileCrafter({
       {/* Preview & Controls Card */}
       <div className="bg-white rounded-[2rem] border-4 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] p-6 md:p-8 relative overflow-hidden flex flex-col h-full">
         {/* Background Decoration */}
-        <div className="absolute -top-10 -right-10 w-40 h-40 bg-yellow-300 rounded-full opacity-50 blur-3xl pointer-events-none"></div>
+        <div className="absolute -top-10 -right-10 w-40 h-40 pointer-events-none"></div>
 
         <div className="flex items-center gap-2 mb-6 relative z-10">
           <span className="bg-blue-400 text-black px-3 py-1 rounded-full font-bold text-xs border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
