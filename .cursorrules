@@ -1,0 +1,86 @@
+# Dummy Factory 프로젝트 규칙
+
+## 파일 구조 규칙
+
+### 디렉토리 구조
+- `src/components/` - 재사용 가능한 UI 컴포넌트
+- `src/pages/` - 페이지 레벨 컴포넌트
+- `src/constants/` - 상수 정의 (번역, 설정 등)
+- `src/utils/` - 순수 함수 유틸리티
+- `src/hooks/` - 커스텀 React 훅
+
+### 파일 명명 규칙
+- 컴포넌트: PascalCase (예: `TiltCard.jsx`)
+- 유틸리티: camelCase (예: `fileGenerator.js`)
+- 상수: camelCase (예: `translations.js`)
+- 페이지: PascalCase (예: `DummyFactory.jsx`)
+
+## 코딩 스타일
+
+### 컴포넌트 작성 규칙
+1. 함수형 컴포넌트 사용
+2. JSDoc 주석으로 Props 문서화
+3. Props는 구조 분해 할당 사용
+4. 하나의 컴포넌트는 하나의 책임만 가짐
+
+### Import 순서
+```javascript
+// 1. React 및 라이브러리
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+
+// 2. 외부 컴포넌트/라이브러리
+import { Download } from "lucide-react";
+
+// 3. 내부 컴포넌트
+import Header from "./Header";
+
+// 4. 상수
+import { FILE_TYPES } from "../constants/fileTypes";
+
+// 5. 유틸리티
+import { generateDummyBlob } from "../utils/fileGenerator";
+
+// 6. 스타일
+import "./Component.css";
+```
+
+### 상태 관리
+- 간단한 상태: `useState` 사용
+- 복잡한 상태: 커스텀 훅으로 분리
+- 전역 상태: 필요시 Context API 사용
+
+### 스타일링
+- Tailwind CSS 클래스 우선 사용
+- 인라인 스타일은 동적 값이 필요한 경우만
+- 재사용 가능한 스타일은 컴포넌트로 분리
+
+## 코드 품질
+
+### 함수 작성 규칙
+- 함수는 하나의 일만 수행
+- 함수명은 동사로 시작 (예: `handleDownload`, `validateSize`)
+- 매직 넘버는 상수로 정의
+- 복잡한 로직은 유틸리티 함수로 분리
+
+### 변수 명명
+- camelCase 사용
+- 의미 있는 이름 사용
+- 약어 지양 (단, 널리 알려진 약어는 예외)
+
+### 주석
+- 복잡한 로직에만 주석 작성
+- JSDoc으로 함수/컴포넌트 문서화
+- TODO 주석은 이슈로 추적
+
+## Git 규칙
+
+### 커밋 메시지
+- 형식: `type: description`
+- 타입: feat, fix, refactor, style, docs, test
+- 예: `feat: add new file type support`
+
+### 브랜치 명명
+- 형식: `type/description`
+- 예: `feature/add-csv-support`, `fix/file-size-validation`
+
