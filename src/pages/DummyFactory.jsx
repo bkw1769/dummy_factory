@@ -110,7 +110,7 @@ export default function DummyFactory() {
         <ProTipCard title={t.proTipTitle} description={t.proTipContent} />
 
         {/* FOOTER AD */}
-        {footerSlot && (
+        {/* {footerSlot && (
           <div className="mt-8 pt-8 border-t-2 border-black/5">
             <AdSense
               slot={footerSlot}
@@ -119,7 +119,7 @@ export default function DummyFactory() {
               className="text-center"
             />
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
