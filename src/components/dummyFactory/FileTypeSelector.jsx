@@ -1,5 +1,5 @@
-import TiltCard from "./TiltCard";
-import { FILE_CATEGORIES } from "../constants/fileTypes";
+import TiltCard from "@/components/dummyFactory/TiltCard";
+import { FILE_CATEGORIES } from "@/constants/fileTypes";
 
 /**
  * 파일 카테고리 선택 영역 컴포넌트

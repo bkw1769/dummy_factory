@@ -1,13 +1,13 @@
 import { useState } from "react";
-import Header from "../components/Header";
-import FileTypeSelector from "../components/FileTypeSelector";
-import FileCrafter from "../components/FileCrafter";
-import ProTipCard from "../components/ProTipCard";
-import AdSense from "../components/AdSense";
-import { FILE_CATEGORIES } from "../constants/fileTypes";
-import { TRANSLATIONS } from "../constants/translations";
-import { generateDummyBlob, downloadFile } from "../utils/fileGenerator";
-import { validateSize, calculateVisualFeedback } from "../utils/sizeValidator";
+import Header from "@/components/dummyFactory/Header";
+import FileTypeSelector from "@/components/dummyFactory/FileTypeSelector";
+import FileCrafter from "@/components/dummyFactory/FileCrafter";
+import ProTipCard from "@/components/dummyFactory/ProTipCard";
+import AdSense from "@/components/AdSense";
+import { FILE_CATEGORIES } from "@/constants/fileTypes";
+import { TRANSLATIONS } from "@/constants/translations";
+import { generateDummyBlob, downloadFile } from "@/utils/fileGenerator";
+import { validateSize, calculateVisualFeedback } from "@/utils/sizeValidator";
 
 /**
  * Dummy Factory 메인 컴포넌트
@@ -73,7 +73,6 @@ export default function DummyFactory() {
       {/* HEADER */}
       <Header
         subtitle={t.subtitle}
-        repoText={t.repo}
         currentLang={lang}
         onToggleLang={toggleLang}
       />
