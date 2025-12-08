@@ -1,7 +1,7 @@
 /**
  * 더미 파일 생성 유틸리티
  */
-import { EXTENSION_MIME_TYPES } from "../constants/fileTypes";
+import { EXTENSION_MIME_TYPES } from "@/constants/dummyFactory/fileTypes";
 
 /**
  * OS 감지 및 단위 변환 상수

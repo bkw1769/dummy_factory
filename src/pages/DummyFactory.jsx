@@ -4,10 +4,16 @@ import FileTypeSelector from "@/components/dummyFactory/FileTypeSelector";
 import FileCrafter from "@/components/dummyFactory/FileCrafter";
 import ProTipCard from "@/components/dummyFactory/ProTipCard";
 import AdSense from "@/components/AdSense";
-import { FILE_CATEGORIES } from "@/constants/fileTypes";
-import { TRANSLATIONS } from "@/constants/translations";
-import { generateDummyBlob, downloadFile } from "@/utils/fileGenerator";
-import { validateSize, calculateVisualFeedback } from "@/utils/sizeValidator";
+import { FILE_CATEGORIES } from "@/constants/dummyFactory/fileTypes";
+import { TRANSLATIONS } from "@/constants/dummyFactory/translations";
+import {
+  generateDummyBlob,
+  downloadFile,
+} from "@/utils/dummyFactory/fileGenerator";
+import {
+  validateSize,
+  calculateVisualFeedback,
+} from "@/utils/dummyFactory/sizeValidator";
 
 /**
  * Dummy Factory 메인 컴포넌트
