@@ -10,7 +10,7 @@ import { TRANSLATIONS } from "@/constants/home/translations";
  */
 export default function Home() {
   const navigate = useNavigate();
-  const [lang, setLang] = useState("ko"); // 기본값: 한국어
+  const [lang, setLang] = useState("en"); // 기본값: 영어
   const t = TRANSLATIONS[lang];
 
   return (
@@ -29,7 +29,7 @@ export default function Home() {
             className="flex items-center gap-2 px-3 py-1.5 rounded-lg font-bold border-2 border-transparent hover:bg-white/80 transition-all active:scale-95 bg-white/50 backdrop-blur-sm"
           >
             <Globe size={18} />
-            <span className="text-sm">{lang === "en" ? "ENG" : "KOR"}</span>
+            <span className="text-sm">{lang === "en" ? "KOR" : "ENG"}</span>
           </button>
         </div>
 

@@ -83,6 +83,34 @@ export const FILE_CATEGORIES = [
 ];
 
 /**
+ * 정상 파일 구조를 생성할 수 있는 확장자 목록
+ * (이 목록에 없는 확장자는 바이너리 데이터 + 확장자 변경으로만 생성됨)
+ */
+export const SUPPORTED_EXTENSIONS = [
+  // 이미지 (전체 지원)
+  ".png", ".jpg", ".jpeg", ".webp", ".gif", ".svg", ".bmp", ".ico", ".tiff",
+  // 비디오 (일부 지원)
+  ".mp4", ".mov", ".avi", ".webm", ".mkv", ".gifv",
+  // 오디오 (일부 지원)
+  ".wav", ".ogg", ".m4a", ".flac",
+  // 문서 (전체 지원)
+  ".pdf", ".doc", ".docx", ".ppt", ".pptx", ".xls", ".xlsx", ".txt", ".md", ".rtf",
+  // 데이터 (전체 지원)
+  ".json", ".csv", ".xml", ".sql", ".yaml", ".html", ".css", ".js",
+  // 압축 (일부 지원)
+  ".zip", ".tar", ".gz",
+];
+
+/**
+ * 확장자가 정상 파일 생성을 지원하는지 확인
+ * @param {string} ext - 확장자 (예: ".mp4")
+ * @returns {boolean} 지원 여부
+ */
+export const isExtensionSupported = (ext) => {
+  return SUPPORTED_EXTENSIONS.includes(ext.toLowerCase());
+};
+
+/**
  * 확장자별 MIME 타입 매핑
  */
 export const EXTENSION_MIME_TYPES = {

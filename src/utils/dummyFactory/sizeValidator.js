@@ -3,12 +3,12 @@
  */
 
 const MIN_SIZE_MB = 0;
-const MAX_SIZE_MB = 2000; // 최대 크기를 2000MB(2GB)로 증가
+const MAX_SIZE_MB = 1000; // 최대 크기를 1000MB(1GB)로 증가
 
 /**
  * 파일 크기 값을 검증하고 제한된 범위로 조정
  * @param {number|string} value - 검증할 크기 값
- * @returns {number} 검증된 크기 값 (0-2000 사이)
+ * @returns {number} 검증된 크기 값 (0-1000 사이)
  */
 export const validateSize = (value) => {
   let newSize = Number(value);

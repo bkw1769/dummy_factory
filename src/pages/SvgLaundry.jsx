@@ -24,7 +24,7 @@ import { DEFAULT_SVG, processSVG } from "@/utils/svgLaundry/svgProcessor";
  * 지저분한 SVG 코드를 깨끗하게 정리해주는 도구
  */
 export default function SvgLaundry() {
-  const [lang, setLang] = useState("ko"); // 기본값: 한국어
+  const [lang, setLang] = useState("en"); // 기본값: 영어
   const [inputCode, setInputCode] = useState(DEFAULT_SVG);
 
   // 상태 분리: 결과 코드와 미리보기용 코드를 별도로 관리

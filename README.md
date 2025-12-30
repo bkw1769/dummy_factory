@@ -2,13 +2,34 @@
 
 더미 파일을 빠르게 생성하고 다운로드할 수 있는 웹 애플리케이션입니다.
 
+## 🛠️ 제공 도구
+
+| 도구 | 경로 | 설명 |
+|------|------|------|
+| **Dummy Factory** | `/dummy-factory` | 다양한 형식의 더미 파일 생성 |
+| **SVG Laundry** | `/svg-laundry` | SVG 파일 최적화 및 정리 |
+
 ## ✨ 주요 기능
 
-- **다양한 파일 타입 지원**: JSON, PNG, JPG, MP4, PDF, CSV, MP3, TXT
-- **크기 조절**: 0MB ~ 1000MB까지 자유롭게 설정 가능
-- **인터랙티브 UI**: 3D 틸트 효과와 부드러운 애니메이션
-- **다국어 지원**: 한국어/영어 전환 가능
-- **시각적 피드백**: 파일 크기에 따른 아이콘 무게감 표현
+### Dummy Factory
+- **50+ 파일 형식 지원**: 이미지, 비디오, 오디오, 문서, 데이터, 압축 파일
+- **크기 조절**: 0MB ~ 1000MB까지 자유롭게 설정
+- **형식별 최적화 생성**: 실제 파일 구조로 생성 (단순 바이너리 아님)
+- **손상된 파일 생성**: 테스트용 corrupt 파일 생성 옵션
+- **OS별 크기 단위**: macOS(1000 기반) / Windows(1024 기반) 자동 감지
+- **인터랙티브 UI**: 3D 틸트 효과와 애니메이션
+- **다국어 지원**: 한국어/영어 전환
+
+### 지원 파일 형식
+
+| 카테고리 | 확장자 |
+|----------|--------|
+| 이미지 | `.png`, `.jpg`, `.jpeg`, `.webp`, `.gif`, `.svg`, `.bmp`, `.ico`, `.tiff` |
+| 비디오 | `.mp4`, `.mov`, `.avi`, `.webm`, `.mkv`, `.wmv`, `.flv`, `.gifv` |
+| 오디오 | `.mp3`, `.wav`, `.ogg`, `.m4a`, `.flac`, `.aac`, `.wma` |
+| 문서 | `.pdf`, `.doc`, `.docx`, `.ppt`, `.pptx`, `.xls`, `.xlsx`, `.txt`, `.md`, `.rtf` |
+| 데이터 | `.json`, `.csv`, `.xml`, `.sql`, `.yaml`, `.html`, `.css`, `.js` |
+| 압축 | `.zip`, `.rar`, `.7z`, `.tar`, `.gz`, `.iso`, `.dmg` |
 
 ## 🚀 시작하기
 
@@ -47,41 +68,77 @@ npm run preview
 ```
 dummy_factory/
 ├── src/
-│   ├── components/          # 재사용 가능한 컴포넌트
-│   │   ├── TiltCard.jsx     # 3D 틸트 효과 카드
-│   │   ├── ConfettiParticle.jsx  # 컨페티 파티클
-│   │   ├── Header.jsx       # 헤더 컴포넌트
-│   │   ├── FileTypeSelector.jsx  # 파일 타입 선택 영역
-│   │   ├── FilePreview.jsx  # 파일 미리보기
-│   │   ├── FileControls.jsx # 파일 생성 컨트롤
-│   │   ├── FileCrafter.jsx  # 파일 제작 영역
-│   │   └── ProTipCard.jsx   # 프로 팁 카드
-│   ├── constants/           # 상수 정의
-│   │   ├── translations.js  # 다국어 번역
-│   │   └── fileTypes.js     # 파일 타입 정의
-│   ├── utils/               # 유틸리티 함수
-│   │   ├── fileGenerator.js # 파일 생성 로직
-│   │   └── sizeValidator.js # 크기 검증 및 계산
-│   ├── pages/               # 페이지 컴포넌트
-│   │   └── DummyFactory.jsx # 메인 페이지
-│   ├── App.jsx              # 루트 컴포넌트
-│   ├── main.jsx             # 진입점
-│   └── index.css            # 전역 스타일
-├── public/                  # 정적 파일
-├── index.html               # HTML 템플릿
-├── package.json             # 프로젝트 설정
-├── vite.config.js           # Vite 설정
-├── tailwind.config.js       # Tailwind CSS 설정
-└── postcss.config.js        # PostCSS 설정
+│   ├── components/
+│   │   ├── dummyFactory/         # Dummy Factory 컴포넌트
+│   │   │   ├── Header.jsx
+│   │   │   ├── FileTypeSelector.jsx
+│   │   │   ├── FileCrafter.jsx
+│   │   │   ├── FilePreview.jsx
+│   │   │   ├── FileControls.jsx
+│   │   │   ├── TiltCard.jsx
+│   │   │   ├── ExtensionChip.jsx
+│   │   │   ├── ConfettiParticle.jsx
+│   │   │   └── ProTipCard.jsx
+│   │   ├── svgLaundry/           # SVG Laundry 컴포넌트
+│   │   │   ├── Header.jsx
+│   │   │   ├── PreviewPanel.jsx
+│   │   │   ├── CodeBlock.jsx
+│   │   │   ├── ToggleOption.jsx
+│   │   │   └── ViewToggle.jsx
+│   │   └── AdSense.jsx           # 공통 광고 컴포넌트
+│   ├── constants/
+│   │   ├── dummyFactory/
+│   │   │   ├── fileTypes.js      # 파일 카테고리 및 MIME 타입 정의
+│   │   │   └── translations.js   # 다국어 번역
+│   │   ├── svgLaundry/
+│   │   │   └── translations.js
+│   │   └── home/
+│   │       └── translations.js
+│   ├── utils/
+│   │   ├── dummyFactory/
+│   │   │   ├── fileGenerator.js  # 메인 파일 생성 로직
+│   │   │   ├── sizeValidator.js  # 크기 검증 유틸리티
+│   │   │   └── fileGenerators/   # 형식별 생성기
+│   │   │       ├── index.js      # 모든 생성기 export
+│   │   │       ├── utils.js      # 공통 유틸리티
+│   │   │       ├── text/         # JSON, CSV, XML, HTML, TXT 등
+│   │   │       ├── image/        # PNG, JPEG, GIF, WebP, SVG 등
+│   │   │       ├── document/     # PDF, DOCX, PPTX, XLSX 등
+│   │   │       ├── audio/        # WAV
+│   │   │       └── archive/      # ZIP
+│   │   └── svgLaundry/
+│   │       └── svgProcessor.js
+│   ├── pages/
+│   │   ├── Home.jsx              # 홈 페이지 (/)
+│   │   ├── DummyFactory.jsx      # 더미 파일 생성 (/dummy-factory)
+│   │   └── SvgLaundry.jsx        # SVG 최적화 (/svg-laundry)
+│   ├── App.jsx                   # 라우터 설정
+│   ├── main.jsx
+│   └── index.css
+├── vite.config.js                # @ alias 설정 포함
+├── tailwind.config.js
+└── postcss.config.js
 ```
 
 ## 🎨 기술 스택
 
+### 프레임워크 & 빌드
 - **React 18** - UI 라이브러리
-- **Vite** - 빌드 도구
-- **Tailwind CSS** - 스타일링
+- **Vite 5** - 빌드 도구 (HMR, @ alias 설정)
+- **React Router DOM** - 클라이언트 사이드 라우팅
+
+### 스타일링 & UI
+- **Tailwind CSS** - 유틸리티 퍼스트 스타일링
 - **Framer Motion** - 애니메이션
 - **Lucide React** - 아이콘
+
+### 파일 생성 라이브러리
+- **pdf-lib** - PDF 문서 생성
+- **docx** - DOCX 문서 생성
+- **xlsx** - Excel 파일 생성
+- **jszip** - ZIP 압축 파일 생성
+- **pngjs** / **jpeg-js** - 이미지 생성
+- **pako** - 압축 유틸리티
 
 ## 📝 코딩 규칙
 
@@ -130,21 +187,42 @@ export default function ComponentName({ propName }) {
 
 ## 🔧 개발 가이드
 
-### 새로운 파일 타입 추가
+### Path Alias
 
-1. `src/constants/fileTypes.js`에 타입 추가
-2. `src/constants/translations.js`에 번역 추가
+Vite에서 `@` alias가 `./src`로 설정되어 있습니다:
+```javascript
+import Component from "@/components/dummyFactory/Header";
+import { FILE_CATEGORIES } from "@/constants/dummyFactory/fileTypes";
+```
 
-### 새로운 언어 추가
+### 새로운 파일 형식 생성기 추가
 
-1. `src/constants/translations.js`에 언어 객체 추가
-2. 언어 전환 로직에 새 언어 추가
+1. `src/utils/dummyFactory/fileGenerators/<category>/` 에 생성기 파일 생성
+   ```javascript
+   // 예: fileGenerators/image/newformat.js
+   export const generateNEWFORMAT = (sizeMB, unit = "auto") => {
+     // 파일 생성 로직
+     return new Blob([data], { type: "image/newformat" });
+   };
+   ```
+2. `fileGenerators/index.js`에서 export 추가
+3. `fileGenerator.js`의 `generatorMap`에 매핑 추가
+4. `constants/dummyFactory/fileTypes.js`에 확장자/MIME 타입 추가
 
-### 컴포넌트 추가
+### 새로운 도구(페이지) 추가
 
-1. `src/components/` 디렉토리에 새 컴포넌트 파일 생성
-2. 컴포넌트는 단일 책임 원칙을 따름
-3. Props는 명확한 타입과 설명을 JSDoc으로 작성
+1. `src/pages/NewTool.jsx` 생성
+2. `src/components/newTool/` 디렉토리에 컴포넌트 추가
+3. `src/constants/newTool/translations.js` 생성
+4. `App.jsx`에 라우트 추가
+
+### 환경 변수
+
+```bash
+# .env (선택사항 - AdSense 광고용)
+VITE_ADSENSE_SLOT_SIDEBAR=your_slot_id
+VITE_ADSENSE_SLOT_FOOTER=your_slot_id
+```
 
 ## 📄 라이선스
 

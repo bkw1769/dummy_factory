@@ -21,13 +21,14 @@ import {
  */
 export default function DummyFactory() {
   // State
-  const [lang, setLang] = useState("ko"); // 기본값: 한국어
+  const [lang, setLang] = useState("en"); // 기본값: 영어
   const [selectedCategory, setSelectedCategory] = useState(FILE_CATEGORIES[0]);
   const [selectedExt, setSelectedExt] = useState(
     FILE_CATEGORIES[0].extensions[0]
   );
   const [sizeMB, setSizeMB] = useState(5);
   const [fileName, setFileName] = useState("dummy_sample");
+  const [isBroken, setIsBroken] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const [confetti, setConfetti] = useState([]);
 
@@ -49,22 +50,28 @@ export default function DummyFactory() {
   };
 
   // 파일 다운로드 핸들러
-  const handleDownload = () => {
+  const handleDownload = async () => {
     setIsDownloading(true);
 
     // 컨페티 효과 트리거
     const newParticles = Array.from({ length: 30 }).map((_, i) => i);
     setConfetti(newParticles);
 
-    // 파일 생성 및 다운로드 시뮬레이션
-    setTimeout(() => {
-      const blob = generateDummyBlob(selectedExt, sizeMB);
-      const fullFileName = `${fileName}${selectedExt}`;
-      downloadFile(blob, fullFileName);
+    try {
+      // 파일 생성 및 다운로드 시뮬레이션
+      setTimeout(async () => {
+        const blob = await generateDummyBlob(selectedExt, sizeMB, "auto", isBroken);
+        const fullFileName = `${fileName}${isBroken ? "_corrupt" : ""}${selectedExt}`;
+        downloadFile(blob, fullFileName);
 
+        setIsDownloading(false);
+        setTimeout(() => setConfetti([]), 2000); // 컨페티 정리
+      }, 800);
+    } catch (error) {
+      console.error("Error generating file:", error);
       setIsDownloading(false);
-      setTimeout(() => setConfetti([]), 2000); // 컨페티 정리
-    }, 800);
+      setTimeout(() => setConfetti([]), 2000);
+    }
   };
 
   // 시각적 피드백 계산
@@ -99,8 +106,10 @@ export default function DummyFactory() {
           sizeMB={sizeMB}
           heavyY={heavyY}
           textY={textY}
+          isBroken={isBroken}
           onExtChange={setSelectedExt}
           onSizeChange={handleSizeChange}
+          onIntegrityChange={setIsBroken}
           fileName={fileName}
           onFileNameChange={setFileName}
           isDownloading={isDownloading}

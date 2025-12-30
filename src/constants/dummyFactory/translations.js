@@ -17,6 +17,11 @@ export const TRANSLATIONS = {
     proTipContent:
       "Need a huge video? Just drag the slider to 1000MB. The file generated will have the correct size metadata for testing upload limits!",
     repo: "Developer Github",
+    integrityLabel: "FILE INTEGRITY",
+    integrityNormal: "Normal File",
+    integrityBroken: "Corrupt File",
+    binaryOnlyNotice: "This format generates a binary file with the extension changed. It may not open in standard applications.",
+    binaryOnlyLabel: "EXTENSION ONLY",
   },
   ko: {
     subtitle: "만들고. 채우고. 배포하세요.",
@@ -33,5 +38,10 @@ export const TRANSLATIONS = {
     proTipContent:
       "대용량 동영상이 필요하신가요? 슬라이더를 1000MB까지 당겨보세요. 업로드 제한 테스트를 위한 완벽한 메타데이터를 가진 파일이 생성됩니다!",
     repo: "개발자 깃허브",
+    integrityLabel: "파일 상태",
+    integrityNormal: "정상 파일",
+    integrityBroken: "깨진 파일",
+    binaryOnlyNotice: "이 형식은 확장자만 변경된 바이너리 파일로 생성됩니다. 일반 프로그램에서 열리지 않을 수 있습니다.",
+    binaryOnlyLabel: "확장자만 변경",
   },
 };

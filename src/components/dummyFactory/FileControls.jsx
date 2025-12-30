@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
-import { Download, RefreshCcw } from "lucide-react";
+import { Download, RefreshCcw, ShieldCheck, FileWarning, AlertTriangle } from "lucide-react";
 import ConfettiParticle from "./ConfettiParticle";
 import ExtensionChip from "./ExtensionChip";
+import { isExtensionSupported } from "@/constants/dummyFactory/fileTypes";
 
 /**
  * 파일 생성 컨트롤 컴포넌트
@@ -17,6 +18,8 @@ import ExtensionChip from "./ExtensionChip";
  * @param {Function} props.onDownload - 다운로드 핸들러
  * @param {Array} props.confetti - 컨페티 파티클 배열
  * @param {Object} props.translations - 번역 객체
+ * @param {boolean} props.isBroken - 깨진 파일 여부
+ * @param {Function} props.onIntegrityChange - 무결성 변경 핸들러
  */
 export default function FileControls({
   extensions,
@@ -30,6 +33,8 @@ export default function FileControls({
   onDownload,
   confetti,
   translations,
+  isBroken = false,
+  onIntegrityChange,
 }) {
   return (
     <div className="space-y-6 relative z-10 mt-auto">
@@ -49,6 +54,46 @@ export default function FileControls({
           ))}
         </div>
       </div>
+
+      {/* Integrity Toggle or Binary-Only Notice */}
+      {onIntegrityChange && (
+        isExtensionSupported(selectedExt) ? (
+          <div className="mb-8 p-1 bg-gray-100 rounded-xl border-2 border-black/10 flex">
+            <button
+              onClick={() => onIntegrityChange(false)}
+              className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg font-bold text-sm transition-all ${
+                !isBroken
+                  ? "bg-white text-green-600 shadow-sm border border-black/10"
+                  : "text-gray-400 hover:text-gray-600"
+              }`}
+            >
+              <ShieldCheck size={16} /> {translations.integrityNormal}
+            </button>
+            <button
+              onClick={() => onIntegrityChange(true)}
+              className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-lg font-bold text-sm transition-all ${
+                isBroken
+                  ? "bg-gray-800 text-white shadow-sm border border-black/10"
+                  : "text-gray-400 hover:text-gray-600"
+              }`}
+            >
+              <FileWarning size={16} /> {translations.integrityBroken}
+            </button>
+          </div>
+        ) : (
+          <div className="mb-8 p-4 bg-amber-50 rounded-xl border-2 border-amber-200">
+            <div className="flex items-center gap-2 mb-2">
+              <AlertTriangle size={18} className="text-amber-600" />
+              <span className="font-bold text-sm text-amber-700">
+                {translations.binaryOnlyLabel}
+              </span>
+            </div>
+            <p className="text-xs text-amber-600 leading-relaxed">
+              {translations.binaryOnlyNotice}
+            </p>
+          </div>
+        )
+      )}
 
       {/* Size Slider & Input */}
       <div className="space-y-2">

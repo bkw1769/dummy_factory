@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
+import { Construction } from "lucide-react";
 
 /**
  * 파일 미리보기 영역 컴포넌트
@@ -8,6 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
  * @param {number} props.sizeMB - 파일 크기 (MB)
  * @param {number} props.heavyY - 무게에 따른 Y축 이동값
  * @param {number} props.textY - 텍스트 Y축 위치
+ * @param {boolean} props.isBroken - 깨진 파일 여부
  */
 export default function FilePreview({
   selectedCategory,
@@ -15,23 +17,30 @@ export default function FilePreview({
   sizeMB,
   heavyY,
   textY,
+  isBroken = false,
 }) {
   return (
     <div className="flex flex-col items-center justify-center mb-8 h-32 relative z-0">
       <AnimatePresence mode="wait">
         <motion.div
-          key={selectedCategory.id}
-          initial={{ scale: 0, rotate: -20 }}
-          animate={{ scale: 1, rotate: 0, y: heavyY }}
+          key={selectedCategory.id + (isBroken ? "_broken" : "_normal")}
+          initial={{ scale: 0, rotate: isBroken ? 10 : -20 }}
+          animate={{ scale: 1, rotate: isBroken ? 5 : 0, y: heavyY }}
           exit={{ scale: 0, rotate: 20 }}
           transition={{ type: "spring", bounce: 0.5 }}
           className="relative"
         >
           <motion.div
             style={{ scale: 1 + sizeMB / 3000 }}
-            className={`w-20 h-20 ${selectedCategory.color} rounded-2xl border-4 border-black flex items-center justify-center text-white shadow-lg z-10 relative`}
+            className={`w-20 h-20 rounded-2xl border-4 border-black flex items-center justify-center text-white shadow-lg z-10 relative transition-colors duration-300 ${
+              isBroken ? "bg-gray-800" : selectedCategory.color
+            }`}
           >
-            <selectedCategory.icon size={40} strokeWidth={2.5} />
+            {isBroken ? (
+              <Construction size={40} strokeWidth={2.5} className="text-yellow-400" />
+            ) : (
+              <selectedCategory.icon size={40} strokeWidth={2.5} />
+            )}
             <span className="absolute -bottom-2 -right-2 bg-black text-white text-[10px] px-2 py-0.5 rounded-full font-bold border border-white">
               {selectedExt}
             </span>
@@ -44,8 +53,16 @@ export default function FilePreview({
         </motion.div>
       </AnimatePresence>
 
-      <motion.p animate={{ y: textY }} className="mt-4 font-bold text-gray-500 text-lg">
+      <motion.p
+        animate={{ y: textY }}
+        className="mt-4 font-bold text-lg text-gray-500 flex items-center justify-center gap-2"
+      >
         {sizeMB} MB
+        {isBroken && (
+          <span className="text-[10px] bg-black text-white px-1.5 py-0.5 rounded font-bold tracking-wide">
+            CORRUPT
+          </span>
+        )}
       </motion.p>
     </div>
   );

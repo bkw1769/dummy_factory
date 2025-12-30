@@ -48,7 +48,7 @@ export default function Header({
         >
           <Globe size={18} />
           <span className="text-sm">
-            {currentLang === "en" ? "ENG" : "KOR"}
+            {currentLang === "en" ? "KOR" : "ENG"}
           </span>
         </button>
         <div className="hidden md:flex items-center gap-2 bg-yellow-300 px-4 py-1.5 rounded-full border-2 border-black font-bold text-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">

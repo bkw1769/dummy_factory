@@ -17,6 +17,8 @@ import FileControls from "./FileControls";
  * @param {Function} props.onDownload - 다운로드 핸들러
  * @param {Array} props.confetti - 컨페티 파티클 배열
  * @param {Object} props.translations - 번역 객체
+ * @param {boolean} props.isBroken - 깨진 파일 여부
+ * @param {Function} props.onIntegrityChange - 무결성 변경 핸들러
  */
 export default function FileCrafter({
   selectedCategory,
@@ -32,13 +34,15 @@ export default function FileCrafter({
   onDownload,
   confetti,
   translations,
+  isBroken = false,
+  onIntegrityChange,
 }) {
   return (
     <div className="lg:col-span-5 flex flex-col gap-6">
       {/* Preview & Controls Card */}
-      <div className="bg-white rounded-[2rem] border-4 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] p-6 md:p-8 relative overflow-hidden flex flex-col h-full">
+      <div className="bg-white rounded-[2rem] border-4 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] p-6 md:p-8 relative overflow-hidden flex flex-col h-full transition-colors duration-300">
         {/* Background Decoration */}
-        <div className="absolute -top-10 -right-10 w-40 h-40 pointer-events-none"></div>
+        <div className="absolute -top-10 -right-10 w-40 h-40 bg-yellow-300 rounded-full opacity-50 blur-3xl pointer-events-none" />
 
         <div className="flex items-center gap-2 mb-6 relative z-10">
           <span className="bg-blue-400 text-black px-3 py-1 rounded-full font-bold text-xs border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
@@ -54,6 +58,7 @@ export default function FileCrafter({
           sizeMB={sizeMB}
           heavyY={heavyY}
           textY={textY}
+          isBroken={isBroken}
         />
 
         {/* CONTROLS */}
@@ -69,6 +74,8 @@ export default function FileCrafter({
           onDownload={onDownload}
           confetti={confetti}
           translations={translations}
+          isBroken={isBroken}
+          onIntegrityChange={onIntegrityChange}
         />
       </div>
     </div>
