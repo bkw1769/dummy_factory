@@ -3,7 +3,6 @@ import Header from "@/components/dummyFactory/Header";
 import FileTypeSelector from "@/components/dummyFactory/FileTypeSelector";
 import FileCrafter from "@/components/dummyFactory/FileCrafter";
 import ProTipCard from "@/components/dummyFactory/ProTipCard";
-import AdSense from "@/components/AdSense";
 import { FILE_CATEGORIES } from "@/constants/dummyFactory/fileTypes";
 import { TRANSLATIONS } from "@/constants/dummyFactory/translations";
 import {
@@ -33,6 +32,7 @@ export default function DummyFactory() {
   const [confetti, setConfetti] = useState([]);
 
   const t = TRANSLATIONS[lang];
+  const FILE_NAME_FALLBACK = "dummy_sample";
 
   // 언어 전환
   const toggleLang = () => setLang((prev) => (prev === "en" ? "ko" : "en"));
@@ -58,17 +58,16 @@ export default function DummyFactory() {
     setConfetti(newParticles);
 
     try {
-      // 파일 생성 및 다운로드 시뮬레이션
-      setTimeout(async () => {
-        const blob = await generateDummyBlob(selectedExt, sizeMB, "auto", isBroken);
-        const fullFileName = `${fileName}${isBroken ? "_corrupt" : ""}${selectedExt}`;
-        downloadFile(blob, fullFileName);
+      // 파일 생성 진행감을 위한 짧은 지연
+      await new Promise((resolve) => setTimeout(resolve, 800));
 
-        setIsDownloading(false);
-        setTimeout(() => setConfetti([]), 2000); // 컨페티 정리
-      }, 800);
+      const safeName = (fileName || "").trim() || FILE_NAME_FALLBACK;
+      const blob = await generateDummyBlob(selectedExt, sizeMB, "auto", isBroken);
+      const fullFileName = `${safeName}${isBroken ? "_corrupt" : ""}${selectedExt}`;
+      downloadFile(blob, fullFileName);
     } catch (error) {
       console.error("Error generating file:", error);
+    } finally {
       setIsDownloading(false);
       setTimeout(() => setConfetti([]), 2000);
     }
@@ -76,10 +75,6 @@ export default function DummyFactory() {
 
   // 시각적 피드백 계산
   const { heavyY, textY } = calculateVisualFeedback(sizeMB);
-
-  // AdSense 환경 변수 (슬롯 ID만 필요)
-  const sidebarSlot = import.meta.env.VITE_ADSENSE_SLOT_SIDEBAR;
-  const footerSlot = import.meta.env.VITE_ADSENSE_SLOT_FOOTER;
 
   return (
     <div className="min-h-screen bg-[#FFFBEB] text-gray-900 font-sans selection:bg-black selection:text-white flex flex-col">

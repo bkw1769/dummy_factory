@@ -103,13 +103,15 @@ export default function FileControls({
             type="number"
             value={sizeMB}
             onChange={(e) => onSizeChange(e.target.value)}
+            min="0"
+            max="1000"
             className="w-24 p-1 text-right font-bold bg-gray-100 rounded border-2 border-gray-200 focus:border-black outline-none"
           />
         </div>
         <input
           type="range"
           min="0"
-          max="2000"
+          max="1000"
           value={sizeMB}
           onChange={(e) => onSizeChange(e.target.value)}
           className="w-full h-3 bg-gray-200 rounded-full appearance-none cursor-pointer border-2 border-black

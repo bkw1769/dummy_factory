@@ -15,13 +15,16 @@ export default function AdSense({
   className = "",
 }) {
   useEffect(() => {
+    let checkAdsbygoogle = null;
+    let timeoutId = null;
+
     try {
       // AdSense 스크립트가 로드되었는지 확인하고 광고 초기화
       if (window.adsbygoogle && window.adsbygoogle.loaded) {
         (window.adsbygoogle = window.adsbygoogle || []).push({});
       } else {
         // 스크립트가 아직 로드되지 않았으면 대기
-        const checkAdsbygoogle = setInterval(() => {
+        checkAdsbygoogle = setInterval(() => {
           if (window.adsbygoogle && window.adsbygoogle.loaded) {
             (window.adsbygoogle = window.adsbygoogle || []).push({});
             clearInterval(checkAdsbygoogle);
@@ -29,11 +32,16 @@ export default function AdSense({
         }, 100);
 
         // 5초 후 타임아웃
-        setTimeout(() => clearInterval(checkAdsbygoogle), 5000);
+        timeoutId = setTimeout(() => clearInterval(checkAdsbygoogle), 5000);
       }
     } catch (err) {
       console.error("AdSense error:", err);
     }
+
+    return () => {
+      if (checkAdsbygoogle) clearInterval(checkAdsbygoogle);
+      if (timeoutId) clearTimeout(timeoutId);
+    };
   }, [slot]);
 
   // 슬롯 ID가 없으면 렌더링하지 않음

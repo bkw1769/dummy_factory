@@ -2,6 +2,101 @@
  * SVG 처리 유틸리티 함수
  */
 
+const BLOCKED_TAGS = new Set([
+  "script",
+  "foreignobject",
+  "iframe",
+  "object",
+  "embed",
+  "audio",
+  "video",
+  "canvas",
+  "link",
+  "style",
+]);
+
+const BLOCKED_ATTR_PREFIXES = ["on"];
+const URL_ATTRS = new Set(["href", "xlink:href", "src"]);
+const SAFE_DATA_URL_PREFIX = "data:image/";
+
+/**
+ * 사용자 입력 SVG를 미리보기/출력 전에 정제해 XSS 위험을 줄임
+ * @param {string} code - 원본 SVG 문자열
+ * @returns {string} 정제된 SVG 문자열
+ */
+export const sanitizeSVG = (code) => {
+  if (!code || typeof code !== "string") return "";
+  if (
+    typeof DOMParser === "undefined" ||
+    typeof XMLSerializer === "undefined" ||
+    typeof NodeFilter === "undefined"
+  ) {
+    return "";
+  }
+
+  try {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(code, "image/svg+xml");
+    const root = doc.documentElement;
+
+    if (!root || root.nodeName.toLowerCase() !== "svg") {
+      return "";
+    }
+
+    if (doc.querySelector("parsererror")) {
+      return "";
+    }
+
+    const walker = doc.createTreeWalker(root, NodeFilter.SHOW_ELEMENT);
+    const toRemove = [];
+    const elements = [];
+
+    while (walker.nextNode()) {
+      elements.push(walker.currentNode);
+    }
+
+    elements.forEach((element) => {
+      const tagName = element.nodeName.toLowerCase();
+      if (BLOCKED_TAGS.has(tagName)) {
+        toRemove.push(element);
+        return;
+      }
+
+      const attrs = Array.from(element.attributes);
+      attrs.forEach((attr) => {
+        const attrName = attr.name.toLowerCase();
+        const value = (attr.value || "").trim().toLowerCase();
+
+        if (BLOCKED_ATTR_PREFIXES.some((prefix) => attrName.startsWith(prefix))) {
+          element.removeAttribute(attr.name);
+          return;
+        }
+
+        if (attrName === "style" && value.includes("url(")) {
+          element.removeAttribute(attr.name);
+          return;
+        }
+
+        if (URL_ATTRS.has(attrName)) {
+          const isUnsafeProtocol =
+            value.startsWith("javascript:") ||
+            value.startsWith("vbscript:") ||
+            (value.startsWith("data:") && !value.startsWith(SAFE_DATA_URL_PREFIX));
+          if (isUnsafeProtocol) {
+            element.removeAttribute(attr.name);
+          }
+        }
+      });
+    });
+
+    toRemove.forEach((node) => node.remove());
+
+    return new XMLSerializer().serializeToString(root);
+  } catch {
+    return "";
+  }
+};
+
 /**
  * 기본 SVG 템플릿
  */
@@ -26,7 +121,8 @@ export const DEFAULT_SVG = `<svg width="24px" height="24px" viewBox="0 0 24 24" 
 export const processSVG = (code, options) => {
   if (!code) return "";
 
-  let cleaned = code;
+  let cleaned = sanitizeSVG(code);
+  if (!cleaned) return "";
 
   // 1. Remove Comments
   cleaned = cleaned.replace(/<!--[\s\S]*?-->/g, "");
@@ -60,4 +156,3 @@ export const processSVG = (code, options) => {
 
   return cleaned;
 };
-

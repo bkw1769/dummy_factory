@@ -169,7 +169,7 @@ export const generateDummyBlob = async (
   }
 
   // 디버깅: 생성된 Blob 크기 확인 (개발 환경에서만)
-  if (process.env.NODE_ENV === "development") {
+  if (import.meta.env.DEV) {
     const actualSizeMB = (
       blob.size / (isMacOS() ? BYTES_PER_MB_DECIMAL : BYTES_PER_MB_BINARY)
     ).toFixed(2);
